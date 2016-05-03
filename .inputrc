@@ -49,6 +49,17 @@ set show-all-if-ambiguous on
 # cause the matches to be listed immediately instead of ringing the bell. The default value is ‘off’.
 set show-all-if-unmodified on
 
+# If set to ‘on’, this alters the default completion behavior when inserting a single match into the line. It’s only active when performing completion in the middle of a word.
+# If enabled, readline does not insert characters from the completion that match characters after point in the word being completed, so portions of the word following the cursor are not duplicated.
+# For instance, if this is enabled, attempting completion when the cursor is after the ‘e’ in ‘Makefile’ will result in ‘Makefile’ rather than ‘Makefilefile’, assuming there is a single possible completion.
+# The default value is ‘off’.
+set skip-completed-text on
+
+# Allow UTF-8 input and output, instead of showing stuff like $'\0123\0456'.
+set input-meta on
+set output-meta on
+set convert-meta off
+
 # allows to search through history using the up and down arrows
 # type "cd" and press the up/down arrow to search through history commands that starts with "cd"
 "\e[B": history-search-forward
