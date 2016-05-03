@@ -11,4 +11,5 @@ Make symlinks
 
 ```sh
 ln -s ~/.dotfiles/.inputrc ~/.inputrc
+ln -s ~/.dotfiles/.vimrc ~/.vimrc
 ```
