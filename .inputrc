@@ -10,6 +10,9 @@ $include /etc/inputrc
 # The color definitions are taken from the value of the LS_COLORS environment variable. The default is ‘off’.
 set colored-stats on
 
+# The number of screen columns used to display possible matches when performing completion.
+# The value is ignored if it is less than 0 or greater than the terminal screen width.
+# A value of 0 will cause matches to be displayed one per line. The default value is -1.
 set completion-display-width 1
 
 # If set to ‘on’, Readline performs filename matching and completion in a case-insensitive fashion.
@@ -37,7 +40,7 @@ set echo-control-characters off
 set history-size -1
 
 # If set to ‘on’, completed directory names have a slash appended. The default is ‘on’.
-set mark-directories off
+set mark-directories on
 
 # This alters the default behavior of the completion functions.
 # If set to ‘on’, words which have more than one possible completion cause the matches to be listed immediately instead of ringing the bell.
