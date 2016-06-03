@@ -67,7 +67,3 @@ set convert-meta off
 # type "cd" and press the up/down arrow to search through history commands that starts with "cd"
 "\e[B": history-search-forward
 "\e[A": history-search-backward
-
-# Ctrl-j and Ctrl-k to cycle through the available completions
-Control-j: menu-complete
-Control-k: menu-complete-backward
