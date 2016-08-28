@@ -24,5 +24,7 @@ Create RSA certificate:
 
 ```bash
 openssl req -x509 -new -key root.rsa.key -days 10000 -out root.rsa.crt \
--subj "/C=UA/ST=OD/L=Odessa/O=DarkPark Ltd/CN=DarkPark ECC Certification Authority/emailAddress=darkpark.main@gmail.com"
+-subj "/C=UA/ST=OD/L=Odessa/O=DarkPark Ltd/CN=DarkPark RSA Certification Authority/emailAddress=darkpark.main@gmail.com"
 ```
+
+Now `root.ecc.crt` and `root.rsa.crt` can be imported to browsers as certification authorities.
