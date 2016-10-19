@@ -39,3 +39,15 @@ The default value is 60.
 ```bash
 echo "vm.swappiness = 5" | sudo tee /etc/sysctl.d/60-swappiness.conf
 ```
+
+
+## max user watches ##
+
+The inotify API provides a mechanism for monitoring file system events.
+Inotify can be used to monitor individual files, or to monitor directories.
+When a directory is monitored, inotify will return events for the directory itself, and for files inside the directory.
+This options specifies an upper limit on the number of watches that can be created per real user ID.
+
+```bash
+echo "fs.inotify.max_user_watches = 524288" | sudo tee /etc/sysctl.d/60-watches.conf
+```
