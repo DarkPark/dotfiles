@@ -51,3 +51,12 @@ This options specifies an upper limit on the number of watches that can be creat
 ```bash
 echo "fs.inotify.max_user_watches = 524288" | sudo tee /etc/sysctl.d/60-watches.conf
 ```
+
+
+## Oracle Java ##
+
+```bash
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+```
