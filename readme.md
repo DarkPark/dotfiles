@@ -86,3 +86,11 @@ for file in /etc/ssh/*.pub; do ssh-keygen -lf $file; done
 # user
 for file in ~/.ssh/*.pub; do ssh-keygen -lf $file; done
 ```
+
+
+## Data encryption ##
+
+* [Self-Encrypting Drives](https://wiki.archlinux.org/index.php/Self-Encrypting_Drives)
+* [Drive Trust Alliance](https://github.com/Drive-Trust-Alliance)
+* [Use the hardware-based full disk encryption of your TCG Opal SSD with msed](https://vxlabs.com/2015/02/11/use-the-hardware-based-full-disk-encryption-your-tcg-opal-ssd-with-msed/)
+* [Guide to Full Disk Encryption with Ubuntu](http://thesimplecomputer.info/full-disk-encryption-with-ubuntu)
