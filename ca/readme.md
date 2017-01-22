@@ -28,3 +28,24 @@ openssl req -x509 -new -key root.rsa.key -days 10000 -out root.rsa.crt \
 ```
 
 Now `root.ecc.crt` and `root.rsa.crt` can be imported to browsers as certification authorities.
+
+
+=== Creation a certificate signed with CA ===
+
+Key generation:
+
+```bash
+openssl genrsa -out somedomain.key 4096
+```
+
+Certificate request (`Common Name` should be somedomain):
+
+```bash
+openssl req -new -key somedomain.key -out somedomain.csr -subj "/C=UA/ST=OD/L=Odessa/O=DarkPark Ltd/OU=NAS/CN=somedomain/emailAddress=darkpark.main@gmail.com"
+```
+
+Signing:
+
+```bash
+openssl x509 -req -in somedomain.csr -CA root.ecc.crt -CAkey root.ecc.key -CAcreateserial -out somedomain.crt -days 5000
+```
