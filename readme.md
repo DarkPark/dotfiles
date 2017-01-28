@@ -94,47 +94,41 @@ for file in ~/.ssh/*.pub; do ssh-keygen -lf $file; done
 * [Drive Trust Alliance](https://github.com/Drive-Trust-Alliance)
 * [Use the hardware-based full disk encryption of your TCG Opal SSD with msed](https://vxlabs.com/2015/02/11/use-the-hardware-based-full-disk-encryption-your-tcg-opal-ssd-with-msed/)
 * [Guide to Full Disk Encryption with Ubuntu](http://thesimplecomputer.info/full-disk-encryption-with-ubuntu)
+* [dm-crypt/Device encryption](https://wiki.archlinux.org/index.php/Dm-crypt/Device_encryption)
 
-Init partition
+Fill the device with random data:
 
 ```bash
-sudo cryptsetup --verbose --key-size=512 --hash=sha512 luksFormat /dev/sda
+sudo dd if=/dev/urandom of=/dev/sda bs=1M status=progress
 ```
 
-Open partition
+Init crypto partition:
+
+```bash
+sudo cryptsetup --key-size=512 --hash=sha512 --iter-time=5000 --use-random luksFormat /dev/sda
+```
+
+Open partition:
 
 ```bash
 sudo cryptsetup luksOpen /dev/sda crypto
 ```
 
-Fill the resulting device with zeros, using dd and /dev/zero as source:
-
-```bash
-sudo dd if=/dev/zero of=/dev/mapper/crypto bs=1M
-```
-
-Close the LUKS device and destroy the LUKS header overriding it with random data:
-
-```bash
-sudo cryptsetup luksClose crypto
-sudo dd if=/dev/urandom of=/dev/sda bs=512 count=20480
-```
-
 Use the device as physical volume:
 
 ```bash
-sudo lvm pvcreate --verbose /dev/mapper/crypto
+sudo lvm pvcreate /dev/mapper/crypto
 ```
 
 ```bash
-sudo lvm vgcreate --verbose crypto /dev/mapper/crypto
+sudo lvm vgcreate crypto /dev/mapper/crypto
 ```
 
-Create the logical volumes
+Create the logical volumes:
 
 ```bash
-sudo lvm lvcreate --size 4G crypto --name swap
-sudo lvm lvcreate --size 16G crypto --name root
+sudo lvm lvcreate --size 8G crypto --name swap
+sudo lvm lvcreate --size 32G crypto --name root
 sudo lvm lvcreate --extents 100%FREE crypto --name home
 ```
 
@@ -142,9 +136,23 @@ Create file systems and set labels:
 
 ```bash
 sudo mkswap /dev/mapper/crypto-swap
-sudo mkfs.ext4 -v /dev/mapper/crypto-root 
+sudo mkfs.ext4 /dev/mapper/crypto-root 
 sudo e2label /dev/mapper/crypto-root root
-sudo mkfs.ext4 -v /dev/mapper/crypto-home 
+sudo mkfs.ext4 /dev/mapper/crypto-home 
 sudo e2label /dev/mapper/crypto-home home
 sync
+```
+
+Install operating system and then finalize setup:
+
+```bash
+sudo mount /dev/mapper/crypto-root /mnt
+sudo mount /dev/sde1 /mnt/boot
+sudo mount -o bind /dev /mnt/dev
+sudo mount -t proc proc /mnt/proc
+sudo mount -t sysfs sys /mnt/sys
+sudo chroot /mnt /bin/bash
+echo "crypto $(sudo blkid /dev/sda | cut -d ' ' -f 2) none luks,discard" >> /etc/crypttab
+update-initramfs -u -k all
+exit
 ```
