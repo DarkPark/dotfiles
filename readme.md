@@ -148,7 +148,7 @@ sudo dd if=/dev/urandom of=/dev/sda bs=1M status=progress
 Init crypto partition:
 
 ```bash
-sudo cryptsetup --key-size=512 --hash=sha512 --iter-time=5000 luksFormat /dev/sda
+sudo cryptsetup --key-size=512 --hash=sha256 --iter-time=5000 luksFormat /dev/sda
 ```
 
 Open partition:
