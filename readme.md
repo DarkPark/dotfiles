@@ -19,6 +19,14 @@ git clone git@github.com:DarkPark/dotfiles.git ~/.dotfiles
 git clone https://github.com/DarkPark/dotfiles.git ~/.dotfiles
 ```
 
+Manual download and extract:
+
+```bash
+wget https://github.com/DarkPark/dotfiles/archive/master.zip
+unzip master.zip
+mv dotfiles-master ~/.dotfiles
+rm master.zip
+```
 
 Make symlinks
 
@@ -50,6 +58,41 @@ This options specifies an upper limit on the number of watches that can be creat
 
 ```bash
 echo "fs.inotify.max_user_watches = 524288" | sudo tee /etc/sysctl.d/60-watches.conf
+```
+
+## Kernel /etc/sysctl.conf Hardening ##
+
+```bash
+# Turn on execshield
+kernel.exec-shield=1
+kernel.randomize_va_space=1
+# Enable IP spoofing protection
+net.ipv4.conf.all.rp_filter=1
+# Disable IP source routing
+net.ipv4.conf.all.accept_source_route=0
+# Ignoring broadcasts request
+net.ipv4.icmp_echo_ignore_broadcasts=1
+net.ipv4.icmp_ignore_bogus_error_messages=1
+# Make sure spoofed packets get logged
+net.ipv4.conf.all.log_martians = 1
+
+# Дропаем ICMP-редиректы (против атак типа MITM)
+net.ipv4.conf.all.accept_redirects=0
+net.ipv6.conf.all.accept_redirects=0
+# Включаем механизм TCP syncookies
+net.ipv4.tcp_syncookies=1
+# Различные твики (защита от спуфинга, увеличение очереди «полуоткрытых» TCP-соединений и так далее)
+net.ipv4.tcp_timestamps=0
+net.ipv4.tcp_max_syn_backlog=1280
+kernel.core_uses_pid=1
+```
+
+
+## Security ##
+
+```bash
+sudo rkhunter --update
+sudo rkhunter --check --report-warnings-only --skip-keypress
 ```
 
 
@@ -105,7 +148,7 @@ sudo dd if=/dev/urandom of=/dev/sda bs=1M status=progress
 Init crypto partition:
 
 ```bash
-sudo cryptsetup --key-size=512 --hash=sha512 --iter-time=5000 --use-random luksFormat /dev/sda
+sudo cryptsetup --key-size=512 --hash=sha512 --iter-time=5000 luksFormat /dev/sda
 ```
 
 Open partition:
@@ -136,9 +179,9 @@ Create file systems and set labels:
 
 ```bash
 sudo mkswap /dev/mapper/crypto-swap
-sudo mkfs.ext4 /dev/mapper/crypto-root 
+sudo mkfs.ext4 /dev/mapper/crypto-root
 sudo e2label /dev/mapper/crypto-root root
-sudo mkfs.ext4 /dev/mapper/crypto-home 
+sudo mkfs.ext4 /dev/mapper/crypto-home
 sudo e2label /dev/mapper/crypto-home home
 sync
 ```
@@ -152,7 +195,7 @@ sudo mount -o bind /dev /mnt/dev
 sudo mount -t proc proc /mnt/proc
 sudo mount -t sysfs sys /mnt/sys
 sudo chroot /mnt /bin/bash
-echo "crypto $(sudo blkid /dev/sda | cut -d ' ' -f 2) none luks,discard" >> /etc/crypttab
+echo "crypto UUID=`blkid -s UUID -o value /dev/sda` none luks,discard" >> /etc/crypttab
 update-initramfs -u -k all
 exit
 ```
