@@ -145,6 +145,14 @@ Fill the device with random data:
 sudo dd if=/dev/urandom of=/dev/sda bs=1M status=progress
 ```
 
+Alternative disk random filling approach:
+
+```bash
+sudo cryptsetup luksFormat /dev/sda
+sudo cryptsetup luksOpen /dev/sda crypto
+sudo dd if=/dev/zero of=/dev/mapper/crypto bs=8M status=progress
+```
+
 Init crypto partition:
 
 ```bash
