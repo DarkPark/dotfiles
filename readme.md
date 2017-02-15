@@ -180,6 +180,7 @@ Create the logical volumes:
 ```bash
 sudo lvm lvcreate --size 8G crypto --name swap
 sudo lvm lvcreate --size 32G crypto --name root
+sudo lvm lvcreate --size 2G crypto --name logs
 sudo lvm lvcreate --extents 100%FREE crypto --name home
 ```
 
@@ -189,6 +190,8 @@ Create file systems and set labels:
 sudo mkswap /dev/mapper/crypto-swap
 sudo mkfs.ext4 /dev/mapper/crypto-root
 sudo e2label /dev/mapper/crypto-root root
+sudo mkfs.ext4 /dev/mapper/crypto-logs
+sudo e2label /dev/mapper/crypto-logs logs
 sudo mkfs.ext4 /dev/mapper/crypto-home
 sudo e2label /dev/mapper/crypto-home home
 sync
