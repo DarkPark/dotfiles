@@ -27,8 +27,15 @@ openssl req -x509 -new -key root.rsa.key -days 10000 -out root.rsa.crt \
 -subj "/C=UA/ST=OD/L=Odessa/O=DarkPark Ltd/CN=DarkPark RSA Certification Authority/emailAddress=darkpark.main@gmail.com"
 ```
 
-Now `root.ecc.crt` and `root.rsa.crt` can be imported to browsers as certification authorities.
+Add certificates to NSS database:
 
+```bash
+# add
+certutil -d sql:$HOME/.pki/nssdb -A -t "CT,C,C" -n "DarkPark ECC Certification Authority - DarkPark Ltd" -i root.ecc.crt
+certutil -d sql:$HOME/.pki/nssdb -A -t "CT,C,C" -n "DarkPark RSA Certification Authority - DarkPark Ltd" -i root.rsa.crt
+# check
+certutil -d sql:$HOME/.pki/nssdb -L
+```
 
 === Creation a certificate signed with CA ===
 
