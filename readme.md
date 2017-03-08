@@ -139,30 +139,36 @@ for file in ~/.ssh/*.pub; do ssh-keygen -lf $file; done
 * [Guide to Full Disk Encryption with Ubuntu](http://thesimplecomputer.info/full-disk-encryption-with-ubuntu)
 * [dm-crypt/Device encryption](https://wiki.archlinux.org/index.php/Dm-crypt/Device_encryption)
 
+Partitions:
+
+* `/dev/sda1` - [EFI system partition](https://en.wikipedia.org/wiki/EFI_system_partition) (fat32, boot, esp, 512Mb)
+* `/dev/sda2` - boot partition (ext4, 512Mb)
+* `/dev/sda3` - LUKS partition
+
 Fill the device with random data:
 
 ```bash
-sudo dd if=/dev/urandom of=/dev/sda bs=1M status=progress
+sudo dd if=/dev/urandom of=/dev/sda3 bs=1M status=progress
 ```
 
 Alternative disk random filling approach:
 
 ```bash
-sudo cryptsetup luksFormat /dev/sda
-sudo cryptsetup luksOpen /dev/sda crypto
+sudo cryptsetup luksFormat /dev/sda3
+sudo cryptsetup luksOpen /dev/sda3 crypto
 sudo dd if=/dev/zero of=/dev/mapper/crypto bs=8M status=progress
 ```
 
 Init crypto partition:
 
 ```bash
-sudo cryptsetup --key-size=512 --hash=sha256 --iter-time=5000 luksFormat /dev/sda
+sudo cryptsetup --key-size=512 --hash=sha256 --iter-time=3000 luksFormat /dev/sda3
 ```
 
 Open partition:
 
 ```bash
-sudo cryptsetup luksOpen /dev/sda crypto
+sudo cryptsetup luksOpen /dev/sda3 crypto
 ```
 
 Use the device as physical volume:
@@ -179,7 +185,7 @@ Create the logical volumes:
 
 ```bash
 sudo lvm lvcreate --size 8G crypto --name swap
-sudo lvm lvcreate --size 32G crypto --name root
+sudo lvm lvcreate --size 20G crypto --name root
 sudo lvm lvcreate --size 2G crypto --name logs
 sudo lvm lvcreate --extents 100%FREE crypto --name home
 ```
@@ -197,7 +203,7 @@ sudo e2label /dev/mapper/crypto-home home
 sync
 ```
 
-Install operating system and then finalize setup:
+Install operating system, do not reboot and then finalize setup:
 
 ```bash
 sudo mount /dev/mapper/crypto-root /mnt
@@ -206,7 +212,7 @@ sudo mount -o bind /dev /mnt/dev
 sudo mount -t proc proc /mnt/proc
 sudo mount -t sysfs sys /mnt/sys
 sudo chroot /mnt /bin/bash
-echo "crypto UUID=`blkid -s UUID -o value /dev/sda` none luks,discard" >> /etc/crypttab
+echo "crypto UUID=`blkid -s UUID -o value /dev/sda3` none luks,discard" >> /etc/crypttab
 update-initramfs -u -k all
 exit
 ```
