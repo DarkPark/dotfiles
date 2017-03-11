@@ -17,14 +17,14 @@ Create ECC certificate:
 
 ```bash
 openssl req -x509 -new -key root.ecc.key -days 10000 -out root.ecc.crt \
--subj "/C=UA/ST=OD/L=Odessa/O=DarkPark Ltd/CN=DarkPark ECC Certification Authority/emailAddress=darkpark.main@gmail.com"
+-subj "/C=UA/ST=OD/L=Odessa/O=DarkPark Ltd/OU=DarkPark Home/CN=DarkPark ECC Certification Authority/emailAddress=darkpark.main@gmail.com"
 ```
 
 Create RSA certificate:
 
 ```bash
 openssl req -x509 -new -key root.rsa.key -days 10000 -out root.rsa.crt \
--subj "/C=UA/ST=OD/L=Odessa/O=DarkPark Ltd/CN=DarkPark RSA Certification Authority/emailAddress=darkpark.main@gmail.com"
+-subj "/C=UA/ST=OD/L=Odessa/O=DarkPark Ltd/OU=DarkPark Home/CN=DarkPark RSA Certification Authority/emailAddress=darkpark.main@gmail.com"
 ```
 
 Add certificates to NSS database:
