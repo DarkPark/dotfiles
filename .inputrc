@@ -2,6 +2,15 @@
 # http://unixhelp.ed.ac.uk/CGI/man-cgi?readline
 # re-read the inputrc file with C-x C-r
 # get a list of the currently available bindings bind -P
+#
+# useful commands:
+# M-f - Move forward a word.
+# M-b - Move backward a word.
+# C-l - Clear the screen, reprinting the current line at the top.
+# C-u - Kill backward from the cursor to the beginning of the current line. Save the killed text on the kill-ring.
+# C-y - Yank the most recently killed text back into the buffer at the cursor.
+# M-u - Uppercase the current (or following) word.
+# M-l - Lowercase the current (or following) word.
 
 # include system wide settings (ignored if one has their own .inputrc)
 $include /etc/inputrc
@@ -67,3 +76,6 @@ set convert-meta off
 # type "cd" and press the up/down arrow to search through history commands that starts with "cd"
 "\e[B": history-search-forward
 "\e[A": history-search-backward
+
+# Ctrl+enter - exec current command with time
+"\C-j": "\C-atime \C-m"
