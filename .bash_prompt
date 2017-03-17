@@ -81,4 +81,9 @@ PS1+="\$(get_jobs_info)\[$bldblu\]\w\[$txtrst\]\$([[ -w \$PWD ]] || echo -e '\[$
 PS2="\[$bldblk\]> \[$txtrst\]"
 
 
-#bind '\C-k: "\e[1~time \e[4~\n"'
+# Alt-bottom - print directory navigation history
+bind -x '"\e[1;3B": "dirs -p | head -20"'
+
+# Alt-left - go one step back in directory navigation history
+bind -x '"\1000": popd &> /dev/null'
+bind '"\e[1;3D": "\C-e\C-u\1000\C-m\C-y"'

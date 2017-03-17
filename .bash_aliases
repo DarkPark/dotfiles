@@ -8,6 +8,7 @@ alias lx="ll -BX"   # sort by extension
 alias lz="ll -rS"   # sort by size
 alias lt="ll -rt"   # sort by date
 alias l.="ll -d .*" # show only hidden files
+alias cd="pushd > /dev/null"
 alias ..="cd .."
 alias ...="cd ../../../"
 alias ....="cd ../../../../"

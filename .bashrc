@@ -1,3 +1,6 @@
+# Bash Reference Manual
+# http://www.gnu.org/software/bash/manual/bashref.html
+
 # if not running interactively don't do anything
 case $- in *i*) ;; *) return;; esac
 
