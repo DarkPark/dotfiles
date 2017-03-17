@@ -11,6 +11,14 @@
 # C-y - Yank the most recently killed text back into the buffer at the cursor.
 # M-u - Uppercase the current (or following) word.
 # M-l - Lowercase the current (or following) word.
+# C-s - Stop output to the screen (for long running verbose commands). Then use PgUp/PgDn for navigation
+# C-q - Allow output to the screen (if previously stopped using command above)
+# C-z - Send the signal SIGTSTP to the current task, which suspends it. To return to it later enter fg 'process name' (foreground).
+#
+# to get keystroke values use `read` command or:
+# 1. type Ctrl+V
+# 2. type the key sequence you are interested in (e.g., Alt+→). This would print ^[[1;3C
+# 3. remove the leading ^[ and replace it with \e to make \e[1;3C
 
 # include system wide settings (ignored if one has their own .inputrc)
 $include /etc/inputrc
@@ -79,3 +87,6 @@ set convert-meta off
 
 # Ctrl+enter - exec current command with time
 "\C-j": "\C-atime \C-m"
+
+# Alt+S - prefix the line with sudo
+"\es": "\C-asudo \C-e"
