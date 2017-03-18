@@ -81,6 +81,9 @@ PS1+="\$(get_jobs_info)\[$bldblu\]\w\[$txtrst\]\$([[ -w \$PWD ]] || echo -e '\[$
 PS2="\[$bldblk\]> \[$txtrst\]"
 
 
+# Alt-l - print current directory file list
+bind -x '"\el": ll'
+
 # Alt-bottom - print directory navigation history
 bind -x '"\e[1;3B": "dirs -p | head -20"'
 
