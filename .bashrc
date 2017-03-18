@@ -20,6 +20,10 @@ HISTFILESIZE=50000
 # builtin time command output format
 export TIMEFORMAT=$'\e[0;30m\e[47mreal:%Rs user:%Us sys:%Ss cpu:%P%%\e[0m'
 
+# set default editor
+export VISUAL=vim
+export EDITOR="$VISUAL"
+
 # prompt customization
 . ~/.bash_prompt
 

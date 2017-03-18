@@ -87,3 +87,7 @@ bind -x '"\e[1;3B": "dirs -p | head -20"'
 # Alt-left - go one step back in directory navigation history
 bind -x '"\1000": popd &> /dev/null'
 bind '"\e[1;3D": "\C-e\C-u\1000\C-m\C-y"'
+
+# Alt-up - go to parent directory
+bind -x '"\1001": cd ..'
+bind '"\e[1;3A": "\C-e\C-u\1001\C-m\C-y"'

@@ -9,6 +9,7 @@
 # C-l - Clear the screen, reprinting the current line at the top.
 # C-u - Kill backward from the cursor to the beginning of the current line. Save the killed text on the kill-ring.
 # C-y - Yank the most recently killed text back into the buffer at the cursor.
+# M-y - Rotate the kill ring, and yank the new top.  Only works following yank or yank-pop.
 # M-u - Uppercase the current (or following) word.
 # M-l - Lowercase the current (or following) word.
 # C-s - Stop output to the screen (for long running verbose commands). Then use PgUp/PgDn for navigation
@@ -90,3 +91,6 @@ set convert-meta off
 
 # Alt+S - prefix the line with sudo
 "\es": "\C-asudo \C-e"
+
+# todo: add git commands
+#"\M-g-s": "\C-e\C-u git status \C-m\C-y"
