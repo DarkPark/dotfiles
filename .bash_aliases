@@ -20,6 +20,7 @@ alias myip="curl ipinfo.io"
 alias ping="ping -c 5" # stop after sending count ECHO_REQUEST packets
 alias wget="wget -c" # can resume downloads
 alias a="aria2c"
+alias serve="python3 -m http.server"
 
 # always enable colored grep output
 alias grep="grep --color=auto"
