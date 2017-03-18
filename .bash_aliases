@@ -8,7 +8,6 @@ alias lx="ll -BX"   # sort by extension
 alias lz="ll -rS"   # sort by size
 alias lt="ll -rt"   # sort by date
 alias l.="ll -d .*" # show only hidden files
-alias cd="pushd > /dev/null"
 alias ..="cd .."
 alias ...="cd ../../../"
 alias ....="cd ../../../../"
@@ -17,6 +16,7 @@ alias svi='sudo vi'
 alias mnt="mount | column -t"
 alias pwdgen="openssl rand -base64 30"
 alias ports="netstat -tulanp" # quickly list all TCP/UDP port on the server
+alias myip="curl ipinfo.io"
 alias ping="ping -c 5" # stop after sending count ECHO_REQUEST packets
 alias wget="wget -c" # can resume downloads
 alias a="aria2c"
@@ -25,11 +25,6 @@ alias a="aria2c"
 alias grep="grep --color=auto"
 alias fgrep="fgrep --color=auto"
 alias egrep="egrep --color=auto"
-
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -71,6 +66,16 @@ function mkfile () {
     dd if=/dev/zero of="$1" count=1 bs=$2;
 }
 
+# directory navigation history
+function cd () {
+    if [[ $1 ]]; then
+        pushd $1 > /dev/null
+    else
+        pushd ~ > /dev/null
+    fi
+}
+
+
 # user dependant
 if [ $UID -ne 0 ]; then
     # normal user
@@ -84,6 +89,5 @@ alias agi='apt install'
 alias agr='apt remove'
 alias agar='apt autoremove'
 alias agu='apt update && apt upgrade'
-
 alias acs='apt search'
 alias aci='apt show'

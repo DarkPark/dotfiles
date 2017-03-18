@@ -18,7 +18,7 @@ HISTSIZE=50000
 HISTFILESIZE=50000
 
 # builtin time command output format
-export TIMEFORMAT="real:%R user:%U sys:%S cpu:%P"
+export TIMEFORMAT=$'\e[0;30m\e[47mreal:%Rs user:%Us sys:%Ss cpu:%P%%\e[0m'
 
 # prompt customization
 . ~/.bash_prompt
