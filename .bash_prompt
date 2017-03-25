@@ -57,8 +57,16 @@ function get_jobs_info {
 
 function get_git_info {
     local branch=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
+
     if [[ $branch ]]; then
-        echo -e "\001$txtylw\002$branch "
+        local output="\001$bldylw\002$branch"
+        local status=`git status --porcelain | cut -c1,2 | tr " " - | sort -u | paste -sd "," -`
+
+        if [[ $status ]]; then
+            output+=" \001$txtylw\002$status"
+        fi
+
+        echo -e "$output "
     fi
 }
 
@@ -82,7 +90,7 @@ PS2="\[$bldblk\]> \[$txtrst\]"
 
 
 # Alt-l - print current directory file list
-bind -x '"\el": ll'
+bind -x '"\e[1;3C": ll'
 
 # Alt-bottom - print directory navigation history
 bind -x '"\e[1;3B": "dirs -p | head -20"'
