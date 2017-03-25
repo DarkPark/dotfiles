@@ -61,12 +61,19 @@ function get_git_info {
     if [[ $branch ]]; then
         local output="\001$bldylw\002$branch"
         local status=`git status --porcelain | cut -c1,2 | tr " " - | sort -u | paste -sd "," -`
+        local topush=`git log --oneline @{u}.. | wc -l`
 
+        # MM, ??, !! and so on
         if [[ $status ]]; then
             output+=" \001$txtylw\002$status"
         fi
 
-        echo -e "$output "
+        # branch is ahead of origin
+        if [[ $topush > 0 ]]; then
+            output+=" push:$topush"
+        fi
+
+        echo -e "\001$txtylw\002[$output\001$txtylw\002] "
     fi
 }
 
