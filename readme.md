@@ -4,29 +4,23 @@ dotfiles
 ## Deployment ##
 
 ```bash
-sudo apt update
-sudo apt upgrade
-sudo apt install acpid mc htop git curl bash-completion whois nmap tmux
-```
+$ mkdir -p /usr/local/aosp/mirror
+$ cd /usr/local/aosp/mirror
+$ repo init -u https://android.googlesource.com/mirror/manifest
 
 
 Clone
 
-```bash
-# for github users
-git clone git@github.com:DarkPark/dotfiles.git ~/.dotfiles
-# for anybody
-git clone https://github.com/DarkPark/dotfiles.git ~/.dotfiles
-```
+$ mkdir -p /usr/local/aosp/main
+$ cd /usr/local/aosp/main
+$ repo init -u /usr/local/aosp/mirror/platform/manifest.git
+$ repo sync
 
 Manual download and extract:
-
-```bash
-wget https://github.com/DarkPark/dotfiles/archive/master.zip
-unzip master.zip
-mv dotfiles-master ~/.dotfiles
-rm master.zip
-```
+$ cd /usr/local/aosp/mirror</code>
+$ repo sync
+$ cd /usr/local/aosp/main
+$ repo sync
 
 Make symlinks
 
