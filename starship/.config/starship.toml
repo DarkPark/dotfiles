@@ -29,6 +29,7 @@ format = "[$user]($style) "
 
 [hostname]
 trim_at = ""
+ssh_symbol = '@ '
 format = "[$ssh_symbol$hostname]($style) "
 
 [localip]
