@@ -1,6 +1,0 @@
-ENTRY "/home/stas" URL "/home/stas"
-ENTRY "/home/stas/documents" URL "/home/stas/documents"
-ENTRY "/home/stas/downloads" URL "/home/stas/downloads"
-ENTRY "/home/stas/media" URL "/home/stas/media"
-ENTRY "/home/stas/mount/root/docker" URL "/home/stas/mount/root/docker"
-ENTRY "/home/stas/mount/root/downloads" URL "/home/stas/mount/root/downloads"
