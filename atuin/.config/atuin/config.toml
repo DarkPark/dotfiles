@@ -1,0 +1,21 @@
+# https://docs.atuin.sh/configuration/config/
+
+# Configures whether or not to automatically check for updates.
+update_check = false
+
+# Atuin will filter for commands executed in any directory within a git repository tree.
+# Filter modes can still be toggled via ctrl-r.
+workspaces = true
+
+# Configure whether or not to show tabs for search and inspect.
+show_tabs = false
+
+# When set to true, Atuin will default to immediately executing a command rather than the user having to press enter twice.
+# Pressing tab will return to the shell and give the user a chance to edit.
+enter_accept = true
+
+[sync]
+records = true
+
+[ui]
+columns = ["duration", "time", "exit", "command"]
