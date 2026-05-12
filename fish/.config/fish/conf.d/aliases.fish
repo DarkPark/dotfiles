@@ -13,13 +13,22 @@ set --export EZA_COLORS "nb=37:nk=32:uR=31:gR=31:da=37"
 # https://github.com/eza-community/eza/blob/main/man/eza.1.md
 alias ls='eza'
 alias ll='ls --long --all --bytes --group --extended --time=modified --time-style="+%Y.%m.%d %H:%M" --git --group-directories-first --color-scale --sort=name'
+# sorting
 alias llse='ll --sort=extension'
 alias llss='ll --sort=size'
 alias llst='ll --sort=type'
 alias llsc='ll --sort=created --time=created'
 alias llsm='ll --sort=modified'
+# reverse sorting
+alias llser='llse --reverse'
+alias llssr='llss --reverse'
+alias llstr='llst --reverse'
+alias llscr='llsc --reverse'
+alias llsmr='llsm --reverse'
+# only files/dirs
 alias llof='ll --only-files'
 alias llod='ll --only-dirs'
+# tree view
 alias llt='ll --tree'
 alias llt2='ll --tree --level=2'
 alias llt3='ll --tree --level=3'
@@ -104,15 +113,63 @@ alias ds='docker system'
 alias dsp='docker system prune'
 
 # nodejs
-alias drun='docker run --interactive --tty --rm --user (id -u "$USER"):(id -g "$USER") --volume "$PWD":/srv --workdir /srv --network=host'
+alias drun='docker run \
+    --interactive \
+    --tty \
+    --rm \
+    --user (id -u "$USER"):(id -g "$USER") \
+    --volume "$PWD":/srv \
+    --volume "$HOME/.npm":/tmp/.npm \
+    --env NPM_CONFIG_CACHE=/tmp/.npm \
+    --workdir /srv \
+    --network=host'
 alias dnode='drun node:lts-slim'
 alias dnode-pull='docker pull node:lts-slim'
 alias dnpm='dnode npm'
 alias dnpx='dnode npx'
 alias dzx='drun zx'
 
-alias dnu='docker run -it --rm ghcr.io/nushell/nushell:latest-bookworm'
+# debian
+alias ddebian='docker run \
+    --interactive \
+    --tty \
+    --rm \
+    --user (id -u "$USER"):(id -g "$USER") \
+    --volume /etc/passwd:/etc/passwd:ro \
+    --volume /etc/group:/etc/group:ro \
+    --volume "$PWD":/srv \
+    --workdir /srv \
+    --env HOME=/tmp \
+    --network=host \
+    --name debian-temp \
+    debian:stable-slim'
+alias ddebian-pull='docker pull debian:stable-slim'
+
+alias dnu='docker run -it \
+    --rm \
+    --user (id -u "$USER"):(id -g "$USER") \
+    --volume "$PWD":/work \
+    --workdir /work \
+    ghcr.io/nushell/nushell:latest-bookworm'
 alias dnu-pull='docker pull ghcr.io/nushell/nushell:latest-bookworm'
+
+# opencode
+alias doc='docker run -it \
+    --rm \
+    --user (id -u "$USER"):(id -g "$USER") \
+    --volume $HOME/docker/opencode/.cache:/home/node/.cache \
+    --volume $HOME/docker/opencode/.config:/home/node/.config \
+    --volume $HOME/docker/opencode/.local:/home/node/.local \
+    --volume "$PWD":/workspace \
+    --workdir /workspace \
+    --add-host=host.docker.internal:host-gateway \
+    --name opencode \
+    opencode'
+alias doc-pull='docker pull opencode'
+
+# does not work
+alias lzd='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock lazyteam/lazydocker'
+alias lzd-pull='docker pull lazyteam/lazydocker'
 
 # systemd
 alias sc='systemctl'
