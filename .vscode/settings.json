@@ -6,6 +6,7 @@
         "darkgreen",
         "dotfiles",
         "ekzhang",
+        "fdfind",
         "fixssh",
         "journalctl",
         "loadavg",
@@ -13,6 +14,7 @@
         "manpager",
         "NOBIND",
         "nushell",
+        "opencode",
         "setw",
         "XAUTHORITY",
         "zoxide"

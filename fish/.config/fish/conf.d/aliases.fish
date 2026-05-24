@@ -200,7 +200,7 @@ alias sss='sudo systemctl suspend'
 alias tb="nc termbin.com 9999"
 
 # https://github.com/sharkdp/fd
-#alias fd='fd --hidden --no-ignore'
+alias fd='fdfind --hidden --no-ignore'
 alias fdf='fd --type file'
 alias fdd='fd --type directory'
 alias fdl='fd --type symlink'
